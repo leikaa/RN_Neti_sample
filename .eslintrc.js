@@ -35,5 +35,6 @@ module.exports = {
     'react/prop-types': 'off',
     'react/jsx-no-bind': 'off',
     'object-shorthand': 'off',
+    'import/no-unresolved': 'off'
   },
 };

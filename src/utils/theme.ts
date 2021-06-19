@@ -1,0 +1,5 @@
+export const THEME = {
+  MENU_COLOR: '#FFF',
+  MAIN_COLOR: '#FF8C00',
+  BACKGROUND_COLOR: '#F6F6F6'
+};
