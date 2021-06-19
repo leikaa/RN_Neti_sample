@@ -2,6 +2,7 @@ import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
 import {THEME} from '../utils/theme';
+import hexToRGBA from '../utils/helpers/HexToRGBA';
 import MainScreen from '../containers/MainScreen';
 
 const MainLayer = createStackNavigator({
@@ -12,8 +13,13 @@ const MainLayer = createStackNavigator({
       headerStyle: {
         backgroundColor: THEME.MENU_COLOR,
         elevation: 6,
-        shadowOpacity: 6,
-        shadowColor: THEME.TEXT_COLOR
+        shadowOffset: {
+          width: 2,
+          height: 2
+        },
+        shadowColor: hexToRGBA(THEME.TEXT_COLOR, 0.4),
+        shadowRadius: 2,
+        shadowOpacity: 1,
       },
       headerTintColor: THEME.MAIN_COLOR,
     },

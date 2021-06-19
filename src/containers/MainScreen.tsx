@@ -38,52 +38,54 @@ const MainScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <VerticalCarousel
-        initialData={initialData}
-        leftItemIndex={leftItemIndex}
-        rightItemIndex={rightItemIndex}
-        itemHeight={itemHeight}
-        itemWidth={itemWidth}
-        sliderHeight={sliderHeight}
-        onSnapToItemHandler={onSnapToItemHandler}
-        carouselRef={leftCarouselItem}
-        isLeftSide={true}
-      />
-      <VerticalCarousel
-        initialData={initialData}
-        leftItemIndex={leftItemIndex}
-        rightItemIndex={rightItemIndex}
-        itemHeight={itemHeight}
-        itemWidth={itemWidth}
-        sliderHeight={sliderHeight}
-        onSnapToItemHandler={onSnapToItemHandler}
-        carouselRef={rightCarouselItem}
-        isLeftSide={false}
-      />
-      <View style={styles.priceSection}>
-        <Text
-          style={styles.itemTitle}
-          numberOfLines={1}
-        >
-          Цена {leftItemIndex !== rightItemIndex ?
-          initialData[leftItemIndex].half_price + initialData[rightItemIndex].half_price :
-          initialData[leftItemIndex].full_price} {'\u20BD'}
-        </Text>
-      </View>
-      {
-        leftItemIndex === rightItemIndex &&
-        <View style={styles.originalItem}>
-          <Text style={styles.itemTitle} numberOfLines={1}>{initialData[leftItemIndex].name}</Text>
-          <Text style={styles.itemSubTitle} numberOfLines={1}>Оригинальный рецепт</Text>
+      <View style={styles.contentWrapper}>
+        <VerticalCarousel
+          initialData={initialData}
+          leftItemIndex={leftItemIndex}
+          rightItemIndex={rightItemIndex}
+          itemHeight={itemHeight}
+          itemWidth={itemWidth}
+          sliderHeight={sliderHeight}
+          onSnapToItemHandler={onSnapToItemHandler}
+          carouselRef={leftCarouselItem}
+          isLeftSide={true}
+        />
+        <VerticalCarousel
+          initialData={initialData}
+          leftItemIndex={leftItemIndex}
+          rightItemIndex={rightItemIndex}
+          itemHeight={itemHeight}
+          itemWidth={itemWidth}
+          sliderHeight={sliderHeight}
+          onSnapToItemHandler={onSnapToItemHandler}
+          carouselRef={rightCarouselItem}
+          isLeftSide={false}
+        />
+        <View style={styles.priceSection}>
+          <Text
+            style={styles.itemTitle}
+            numberOfLines={1}
+          >
+            Цена {leftItemIndex !== rightItemIndex ?
+            initialData[leftItemIndex].half_price + initialData[rightItemIndex].half_price :
+            initialData[leftItemIndex].full_price} {'\u20BD'}
+          </Text>
         </View>
-      }
-      <TouchableOpacity
-        style={styles.randomButtonWrapper}
-        activeOpacity={0.7}
-        onPress={randomPressHandler}
-      >
-        <DiceIcon color={THEME.MENU_COLOR}/>
-      </TouchableOpacity>
+        {
+          leftItemIndex === rightItemIndex &&
+          <View style={styles.originalItem}>
+            <Text style={styles.itemTitle} numberOfLines={1}>{initialData[leftItemIndex].name}</Text>
+            <Text style={styles.itemSubTitle} numberOfLines={1}>Оригинальный рецепт</Text>
+          </View>
+        }
+        <TouchableOpacity
+          style={styles.randomButtonWrapper}
+          activeOpacity={0.7}
+          onPress={randomPressHandler}
+        >
+          <DiceIcon color={THEME.MENU_COLOR}/>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   )
 }
@@ -95,13 +97,15 @@ MainScreen.navigationOptions = () => ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: THEME.BACKGROUND_COLOR
+  },
+  contentWrapper: {
     alignItems: 'center',
     justifyContent: 'space-between',
     flexWrap: 'nowrap',
     flexDirection: 'row',
-    paddingHorizontal: 16,
     position: 'relative',
-    backgroundColor: THEME.BACKGROUND_COLOR
+    paddingHorizontal: 16
   },
   priceSection: {
     position: 'absolute',
@@ -140,10 +144,11 @@ const styles = StyleSheet.create({
     right: 30,
     shadowOffset: {
       width: 2,
-      height: 5
+      height: 2
     },
-    shadowColor: THEME.TEXT_COLOR,
-    shadowRadius: 6,
+    shadowColor: hexToRGBA(THEME.TEXT_COLOR, 0.4),
+    shadowRadius: 2,
+    shadowOpacity: 1,
     elevation: 12,
     zIndex: 100
   }

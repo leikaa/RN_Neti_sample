@@ -114,7 +114,6 @@
 				A586E93461784B00073FF529 /* Pods-NetiApp-NetiAppTests.debug.xcconfig */,
 				6047D399ABCDB8EC53863701 /* Pods-NetiApp-NetiAppTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
