@@ -9,11 +9,12 @@ import CarouselItem from './CarouselItem';
 
 const {width} = Dimensions.get('window');
 const VerticalCarousel = ({
-                            initialData, leftItemIndex, rightItemIndex, itemHeight,
-                            itemWidth, sliderHeight, onSnapToItemHandler, isLeftSide
+                            initialData, leftItemIndex, rightItemIndex, itemHeight, itemWidth,
+                            sliderHeight, onSnapToItemHandler, isLeftSide, carouselRef
                           }: {
   initialData: CarouselSlide[], leftItemIndex: number, rightItemIndex: number, itemHeight: number, itemWidth: number,
-  sliderHeight: number, onSnapToItemHandler: (slideIndex: number, isLeftSide: boolean) => void, isLeftSide: boolean
+  sliderHeight: number, onSnapToItemHandler: (slideIndex: number, isLeftSide: boolean) => void, isLeftSide: boolean,
+  carouselRef: any
 }) => (
   <View style={[styles.container, isLeftSide && {alignItems: 'flex-end'}, !isLeftSide && {alignItems: 'flex-start'}]}>
     {
@@ -37,6 +38,7 @@ const VerticalCarousel = ({
       </View>
     }
     <Carousel
+      ref={carouselRef}
       data={initialData}
       keyExtractor={(item: CarouselSlide) => item.id}
       renderItem={({item}: { item: CarouselSlide }) => CarouselItem(item, itemHeight, isLeftSide)}

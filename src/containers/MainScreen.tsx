@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
-import {Dimensions, SafeAreaView, Text, View, StyleSheet} from 'react-native';
+import React, {useState, useRef} from 'react';
+import {Dimensions, SafeAreaView, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 
 import {THEME} from '../utils/theme';
 import hexToRGBA from '../utils/helpers/HexToRGBA';
+import getRandomNumber from '../utils/helpers/GetRandomNumber';
 import {initialData} from '../entity/initialData';
 import VerticalCarousel from '../components/MainScreen/VerticalCarousel';
+import DiceIcon from '../components/Common/DiceIcon';
 
 const {width, height} = Dimensions.get('window');
 const sliderHeight = height - 80;
@@ -14,9 +16,24 @@ const itemWidth = itemHeight / 2;
 const MainScreen = () => {
   const [leftItemIndex, setLeftItemIndex] = useState(0);
   const [rightItemIndex, setRightItemIndex] = useState(0);
+  const leftCarouselItem = useRef(null);
+  const rightCarouselItem = useRef(null);
 
   const onSnapToItemHandler = (slideIndex: number, isLeftSide: boolean) => {
     isLeftSide ? setLeftItemIndex(slideIndex) : setRightItemIndex(slideIndex);
+  }
+
+  const randomPressHandler = () => {
+    const leftItemIndex = getRandomNumber(0, initialData.length - 1);
+    const rightItemIndex = getRandomNumber(0, initialData.length - 1);
+    if (leftItemIndex && leftCarouselItem && leftCarouselItem.current) {
+      setLeftItemIndex(leftItemIndex);
+      leftCarouselItem.current.snapToItem(leftItemIndex);
+    }
+    if (rightItemIndex && rightCarouselItem && rightCarouselItem.current) {
+      setRightItemIndex(rightItemIndex);
+      rightCarouselItem.current.snapToItem(rightItemIndex);
+    }
   }
 
   return (
@@ -29,6 +46,7 @@ const MainScreen = () => {
         itemWidth={itemWidth}
         sliderHeight={sliderHeight}
         onSnapToItemHandler={onSnapToItemHandler}
+        carouselRef={leftCarouselItem}
         isLeftSide={true}
       />
       <VerticalCarousel
@@ -39,6 +57,7 @@ const MainScreen = () => {
         itemWidth={itemWidth}
         sliderHeight={sliderHeight}
         onSnapToItemHandler={onSnapToItemHandler}
+        carouselRef={rightCarouselItem}
         isLeftSide={false}
       />
       <View style={styles.priceSection}>
@@ -58,6 +77,13 @@ const MainScreen = () => {
           <Text style={styles.itemSubTitle} numberOfLines={1}>Оригинальный рецепт</Text>
         </View>
       }
+      <TouchableOpacity
+        style={styles.randomButtonWrapper}
+        activeOpacity={0.7}
+        onPress={randomPressHandler}
+      >
+        <DiceIcon color={THEME.MENU_COLOR}/>
+      </TouchableOpacity>
     </SafeAreaView>
   )
 }
@@ -83,7 +109,8 @@ const styles = StyleSheet.create({
     width: width,
     paddingHorizontal: 16,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    zIndex: 10
   },
   originalItem: {
     position: 'absolute',
@@ -91,7 +118,8 @@ const styles = StyleSheet.create({
     width: width,
     paddingHorizontal: 16,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    zIndex: 10
   },
   itemTitle: {
     color: THEME.TEXT_COLOR,
@@ -99,6 +127,25 @@ const styles = StyleSheet.create({
   },
   itemSubTitle: {
     color: hexToRGBA(THEME.TEXT_COLOR, 0.5)
+  },
+  randomButtonWrapper: {
+    position: 'absolute',
+    width: 40,
+    height: 40,
+    backgroundColor: hexToRGBA(THEME.MAIN_COLOR, 0.8),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+    bottom: 30,
+    right: 30,
+    shadowOffset: {
+      width: 2,
+      height: 5
+    },
+    shadowColor: THEME.TEXT_COLOR,
+    shadowRadius: 6,
+    elevation: 12,
+    zIndex: 100
   }
 })
 

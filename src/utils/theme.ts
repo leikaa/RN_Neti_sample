@@ -2,5 +2,6 @@ export const THEME = {
   MENU_COLOR: '#FFF',
   MAIN_COLOR: '#FF8C00',
   BACKGROUND_COLOR: '#FFF',
-  TEXT_COLOR: '#000'
+  TEXT_COLOR: '#000',
+  DISABLED_COLOR: '#D3D3D3'
 };
