@@ -35,6 +35,8 @@ module.exports = {
     'react/prop-types': 'off',
     'react/jsx-no-bind': 'off',
     'object-shorthand': 'off',
-    'import/no-unresolved': 'off'
+    'import/no-unresolved': 'off',
+    'react/jsx-boolean-value': 'off',
+    'react-native/no-inline-styles': 'off'
   },
 };
