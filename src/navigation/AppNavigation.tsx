@@ -11,6 +11,9 @@ const MainLayer = createStackNavigator({
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: THEME.MENU_COLOR,
+        elevation: 6,
+        shadowOpacity: 6,
+        shadowColor: THEME.TEXT_COLOR
       },
       headerTintColor: THEME.MAIN_COLOR,
     },
