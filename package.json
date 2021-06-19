@@ -19,12 +19,15 @@
     "react-native-snap-carousel": "4.0.0-beta.6",
     "react-navigation": "^4.4.4",
     "react-navigation-stack": "^2.10.4",
-    "react-native-svg": "^12.1.1"
+    "react-native-svg": "^12.1.1",
+    "mobx": "^6.1.7",
+    "mobx-react": "^7.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@babel/runtime": "^7.12.5",
     "@babel/preset-env": "^7.1.6",
+    "@babel/plugin-proposal-decorators": "^7.14.5",
     "@react-native-community/eslint-config": "^2.0.0",
     "@types/jest": "^26.0.23",
     "@types/react-native": "^0.64.5",

@@ -1,19 +1,21 @@
 import React, {useState, useRef} from 'react';
 import {Dimensions, SafeAreaView, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {inject, observer} from 'mobx-react';
 
 import {THEME} from '../utils/theme';
 import hexToRGBA from '../utils/helpers/HexToRGBA';
 import getRandomNumber from '../utils/helpers/GetRandomNumber';
-import {initialData} from '../entity/initialData';
 import VerticalCarousel from '../components/MainScreen/VerticalCarousel';
 import DiceIcon from '../components/Common/DiceIcon';
+
+import {MainStore} from '../store/mainStore';
 
 const {width, height} = Dimensions.get('window');
 const sliderHeight = height - 80;
 const itemHeight = sliderHeight / 3;
 const itemWidth = itemHeight / 2;
 
-const MainScreen = () => {
+const MainScreen = ({mainStore}: { mainStore: MainStore }) => {
   const [leftItemIndex, setLeftItemIndex] = useState(0);
   const [rightItemIndex, setRightItemIndex] = useState(0);
   const leftCarouselItem = useRef(null);
@@ -24,8 +26,8 @@ const MainScreen = () => {
   }
 
   const randomPressHandler = () => {
-    const leftItemIndex = getRandomNumber(0, initialData.length - 1);
-    const rightItemIndex = getRandomNumber(0, initialData.length - 1);
+    const leftItemIndex = getRandomNumber(0, mainStore.pizzas.length - 1);
+    const rightItemIndex = getRandomNumber(0, mainStore.pizzas.length - 1);
     if (leftItemIndex && leftCarouselItem && leftCarouselItem.current) {
       setLeftItemIndex(leftItemIndex);
       leftCarouselItem.current.snapToItem(leftItemIndex);
@@ -40,7 +42,7 @@ const MainScreen = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.contentWrapper}>
         <VerticalCarousel
-          initialData={initialData}
+          initialData={mainStore.pizzas}
           leftItemIndex={leftItemIndex}
           rightItemIndex={rightItemIndex}
           itemHeight={itemHeight}
@@ -51,7 +53,7 @@ const MainScreen = () => {
           isLeftSide={true}
         />
         <VerticalCarousel
-          initialData={initialData}
+          initialData={mainStore.pizzas}
           leftItemIndex={leftItemIndex}
           rightItemIndex={rightItemIndex}
           itemHeight={itemHeight}
@@ -67,14 +69,14 @@ const MainScreen = () => {
             numberOfLines={1}
           >
             Цена {leftItemIndex !== rightItemIndex ?
-            initialData[leftItemIndex].half_price + initialData[rightItemIndex].half_price :
-            initialData[leftItemIndex].full_price} {'\u20BD'}
+            mainStore.pizzas[leftItemIndex].half_price + mainStore.pizzas[rightItemIndex].half_price :
+            mainStore.pizzas[leftItemIndex].full_price} {'\u20BD'}
           </Text>
         </View>
         {
           leftItemIndex === rightItemIndex &&
           <View style={styles.originalItem}>
-            <Text style={styles.itemTitle} numberOfLines={1}>{initialData[leftItemIndex].name}</Text>
+            <Text style={styles.itemTitle} numberOfLines={1}>{mainStore.pizzas[leftItemIndex].name}</Text>
             <Text style={styles.itemSubTitle} numberOfLines={1}>Оригинальный рецепт</Text>
           </View>
         }
@@ -152,6 +154,6 @@ const styles = StyleSheet.create({
     elevation: 12,
     zIndex: 100
   }
-})
+});
 
-export default MainScreen;
+export default inject('mainStore')(observer(MainScreen));
